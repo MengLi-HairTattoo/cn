@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html data-lang="en" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Meng Li Hair&amp;Tattoo — Tattoo Portfolio" name="description"/>
+<title>Meng Li Hair&amp;Tattoo — Tattoo Portfolio</title>
+<link href="../assets/img/logo.svg" rel="icon"/>
+<link href="../assets/css/style.css" rel="stylesheet"/>
+<!-- Gallery centering for first two images -->
+<style>
+    /* Only apply to the first two gallery items */
+    .thumb.thumb--focus{
+      aspect-ratio: 3 / 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .thumb.thumb--focus > img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display:block;
+    }
+  </style>
+<style>
+    /* i18n */
+    .lang-switch{display:flex;gap:8px;align-items:center}
+    .lang-switch .lang-btn{border:1px solid rgba(255,255,255,.25);background:transparent;color:inherit;padding:6px 10px;border-radius:999px;font-size:12px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;}
+    .lang-switch .lang-btn.is-active{background:rgba(255,255,255,.12)}
+    @media (max-width: 720px){ .lang-switch{display:flex; flex-wrap:wrap;} }
+  </style>
+<style>
+    /* Artist cards */
+    .artist-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    @media (max-width: 720px){ .artist-grid{grid-template-columns:1fr;} }
+    .artist-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:18px;overflow:hidden;display:grid;grid-template-columns:160px 1fr;min-height:160px}
+    @media (max-width: 720px){ .artist-card{grid-template-columns:120px 1fr;} }
+    .artist-card img{width:100%;height:100%;object-fit:cover;display:block}
+    .artist-body{padding:14px 14px 16px}
+    .artist-name{margin:0 0 6px;font-size:18px;letter-spacing:.2px}
+    .artist-meta{margin:0 0 10px;opacity:.85;font-size:13px;line-height:1.55}
+    .artist-tags{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;padding:0;list-style:none}
+    .artist-tags li{font-size:12px;border:1px solid rgba(255,255,255,.18);padding:4px 10px;border-radius:999px;opacity:.9}
+    .artist-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.22)}
+    .btn.btn-ghost:hover{background:rgba(255,255,255,.06)}
+
+    /* Drawer (side panel) */
+    .drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);z-index:999;display:flex;justify-content:flex-end}
+    .drawer-overlay[hidden]{display:none !important;}
+
+    .drawer{width:min(520px, 92vw);height:100%;background:#0f0f12;border-left:1px solid rgba(255,255,255,.12);box-shadow:0 24px 60px rgba(0,0,0,.6);display:flex;flex-direction:column}
+    .drawer-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:16px;border-bottom:1px solid rgba(255,255,255,.10)}
+    .drawer-title{margin:0;font-size:18px}
+    .drawer-sub{margin:4px 0 0;opacity:.85;font-size:12px;line-height:1.5}
+    .drawer-close{background:transparent;border:1px solid rgba(255,255,255,.18);color:inherit;border-radius:999px;padding:6px 10px;cursor:pointer}
+    .drawer-body{padding:14px 16px 18px;overflow:auto}
+    .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+    .chip{border:1px solid rgba(255,255,255,.18);background:transparent;color:inherit;border-radius:999px;padding:6px 10px;font-size:12px;cursor:pointer}
+    .chip[aria-pressed="true"]{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28)}
+    .works-masonry{column-count:2;column-gap:12px}
+    @media (max-width: 420px){ .works-masonry{column-count:1;} }
+    .work-item{break-inside:avoid;margin:0 0 12px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03)}
+    .work-item img{width:100%;height:auto;display:block}
+    .work-cap{padding:10px 10px 12px}
+    .work-cap .cap-title{margin:0 0 6px;font-size:12px;opacity:.9}
+    .work-cap .cap-meta{margin:0;font-size:11px;opacity:.7}
+
+    /* Disable body scroll when drawer open */
+    html.is-locked, html.is-locked body{overflow:hidden}
+  </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header" data-header="">
+<div class="header-inner">
+<a aria-label="Back to home" class="brand" href="index.html">
+<img alt="Meng Li Hair&amp;Tattoo Logo" class="brand-logo" src="../assets/img/logo.svg"/>
+</a>
+<nav aria-label="Main menu" class="site-nav">
+<ul class="nav-list">
+<li><a class="nav-link" href="index.html">Home</a></li>
+<li><a class="nav-link is-active" href="tattoo.html">Tattoo</a></li>
+<li><a class="nav-link" href="barber.html">Barber</a></li>
+<li><a class="nav-link" href="core-team.html">Core Team</a></li>
+<li><a class="nav-link" href="about.html">About</a></li>
+<li><a class="nav-link" href="contact.html">Contact</a></li>
+</ul>
+</nav>
+<div class="header-actions">
+<a class="btn btn-primary" data-wa="" href="https://wa.me/60176775237">Book an appointment</a>
+<div aria-label="Language switch" class="lang-switch" role="navigation"><a class="lang-btn" href="../tattoo.html">中文</a><a aria-current="page" class="lang-btn is-active" href="tattoo.html">EN</a><a class="lang-btn" href="../ms/tattoo.html">BM</a></div>
+<button aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu" class="icon-btn menu-btn" data-menu-button="" type="button">
+<span aria-hidden="true" class="menu-icon"><span></span></span>
+</button>
+</div>
+</div>
+<div class="mobile-drawer" data-mobile-menu="" hidden="" id="mobileMenu">
+<nav aria-label="Mobile menu" class="mobile-nav">
+<a class="mobile-link" href="index.html">Home</a>
+<a class="mobile-link" href="tattoo.html">Tattoo</a>
+<a class="mobile-link" href="barber.html">Barber</a>
+<a class="mobile-link" href="core-team.html">Core Team</a>
+<a class="mobile-link" href="about.html">About</a>
+<a class="mobile-link" href="contact.html">Contact</a>
+<div class="mobile-cta">
+<a class="btn btn-primary btn-block" data-wa="" href="https://wa.me/60176775237">Book an appointment</a>
+</div>
+<div class="mobile-social">
+<a aria-label="Instagram" class="social-link" href="#">IG</a>
+<a aria-label="Facebook" class="social-link" href="#">FB</a>
+<a aria-label="Xiaohongshu" class="social-link" href="#">Xiaohongshu</a>
+<a aria-label="Douyin" class="social-link" href="#">Douyin</a>
+<a aria-label="TikTok" class="social-link" href="#">TikTok</a>
+</div>
+</nav>
+</div>
+</header>
+<main id="main">
+<section class="page-hero">
+<div class="container">
+<p class="eyebrow">Tattoo</p>
+<h1 class="page-title">Tattoo portfolio</h1>
+<p class="page-lead">Let the work speak. This page starts with a portfolio wall and category framework. Once you provide more works, I’ll help refine categories and a lightbox gallery.</p>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<div class="section-head">
+<div>
+<h2 class="section-title">Tattoo artists</h2>
+<p class="section-desc">Choose a tattoo artist to view their style and portfolio.</p>
+</div>
+<span class="badge">Portfolio opens in the drawer.</span>
+</div>
+<div class="artist-grid">
+<article class="artist-card">
+<img alt="Tattoo Artist A" src="../images/TA1.png"/>
+<div class="artist-body">
+<h3 class="artist-name">Tattoo Artist A</h3>
+<p class="artist-meta">Prefers black &amp; grey, fine-line, and custom designs. Share your idea, placement, and budget, and I’ll suggest a more suitable composition.</p>
+<ul aria-label="Style tags" class="artist-tags">
+<li>Black &amp; Grey</li><li>Fine-line</li><li>Custom</li>
+</ul>
+<div class="artist-actions">
+<button class="btn btn-primary" data-open-drawer="A" type="button">View portfolio</button>
+<a class="btn btn-ghost" data-wa="" href="https://wa.me/60176775237">Consultation / Booking</a>
+</div>
+</div>
+</article>
+<article class="artist-card">
+<img alt="Tattoo Artist B" src="../images/TB1.png"/>
+<div class="artist-body">
+<h3 class="artist-name">Tattoo Artist B</h3>
+<p class="artist-meta">Prefers traditional, small pieces, and lettering designs—ideal for clean, sharp, everyday tattoos that age well.</p>
+<ul aria-label="Style tags" class="artist-tags">
+<li>Traditional</li><li>Small pieces</li><li>Lettering</li>
+</ul>
+<div class="artist-actions">
+<button class="btn btn-primary" data-open-drawer="B" type="button">View portfolio</button>
+<a class="btn btn-ghost" data-wa="" href="https://wa.me/60176775237">Consultation / Booking</a>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="container">
+<div class="section-head">
+<div>
+<h2 class="section-title">Featured work</h2>
+<p class="section-desc">Tap a tattoo artist above to open their full portfolio (drawer).</p>
+</div>
+<span class="badge">Filter in the drawer</span>
+</div>
+<div aria-label="Featured work preview" class="gallery">
+<figure class="thumb thumb--focus"><img alt="A Work 1" src="../images/TA01.png"/><figcaption style="display:none">Black &amp; Grey</figcaption></figure>
+<figure class="thumb thumb--focus"><img alt="A Work 2" src="../images/TA02.png"/><figcaption style="display:none">Fine-line</figcaption></figure>
+<figure class="thumb"><img alt="A Work 3" src="../images/TA03.png"/><figcaption style="display:none">Custom</figcaption></figure>
+<figure class="thumb"><img alt="B Work 1" src="../images/TB01.png"/><figcaption style="display:none">Traditional</figcaption></figure>
+<figure class="thumb"><img alt="B Work 2" src="../images/TB02.png"/><figcaption style="display:none">Small pieces</figcaption></figure>
+<figure class="thumb"><img alt="B Work 3" src="../images/TB03.png"/><figcaption style="display:none">Lettering</figcaption></figure>
+</div>
+</div>
+</section>
+</main>
+<!-- Drawer: Tattoo Portfolio -->
+<div class="drawer-overlay" data-drawer-overlay="" hidden="">
+<aside aria-label="Portfolio drawer" aria-modal="true" class="drawer" data-drawer="" role="dialog">
+<div class="drawer-head">
+<div>
+<h3 class="drawer-title" data-drawer-title="">Portfolio</h3>
+<p class="drawer-sub" data-drawer-sub="">Choose a category to filter the portfolio.</p>
+</div>
+<button aria-label="Close" class="drawer-close" data-drawer-close="" type="button">✕</button>
+</div>
+<div class="drawer-body">
+<div aria-label="Filter by category" class="filter-bar" data-filter-bar="" role="group"></div>
+<div class="works-masonry" data-works=""></div>
+</div>
+</aside>
+</div>
+<footer aria-label="Footer information" class="site-footer">
+<div class="container footer-inner">
+<div class="footer-col">
+<h3 class="footer-title">Studio</h3>
+<p class="footer-text">
+<a class="footer-link" href="https://maps.google.com/?q=C-G-16%2C+Sg.+Besi%2C+1%2C+Jln+Razak+Mansion%2C+Sungai+Besi%2C+57100+Kuala+Lumpur%2C+Wilayah+Persekutuan+Kuala+Lumpur" rel="noopener" target="_blank">
+            C-G-16, Sg. Besi, 1, Jln Razak Mansion, Sungai Besi, 57100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur
+          </a>
+</p>
+<p class="footer-text"><a class="footer-link" href="tel:+60176775237">+60 17-677 5237</a></p>
+<p class="footer-text">Mon–Sun • 12:00–20:00</p>
+</div>
+<div class="footer-col">
+<h3 class="footer-title">Navigation</h3>
+<ul class="footer-list">
+<li><a class="footer-link" href="tattoo.html">Tattoo</a></li>
+<li><a class="footer-link" href="barber.html">Barber</a></li>
+<li><a class="footer-link" href="core-team.html">Core Team</a></li>
+<li><a class="footer-link" href="advice.html">Aftercare</a></li>
+<li><a class="footer-link" href="contact.html">Contact</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h3 class="footer-title">Follow us</h3>
+<div class="footer-social">
+<a aria-label="Instagram" class="social-icon" href="#">IG</a>
+<a aria-label="Facebook" class="social-icon" href="#">FB</a>
+<a aria-label="Xiaohongshu" class="social-icon" href="#">Xiaohongshu</a>
+<a aria-label="Douyin" class="social-icon" href="#">Douyin</a>
+<a aria-label="TikTok" class="social-icon" href="#">TikTok</a>
+<a aria-label="WhatsApp" class="social-icon" href="https://wa.me/60176775237" rel="noopener" target="_blank">WA</a>
+</div>
+<p class="footer-small">© <span data-year=""></span> Meng Li Hair&amp;Tattoo. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script defer="" src="../assets/js/main.js"></script>
+<script>
+(function(){{
+  var buttons = document.querySelectorAll('.lang-switch [data-lang-btn]');
+  if(!buttons || !buttons.length) return;
+  var page = 'tattoo.html';
+  var base = '../'; // '' for zh root, '../' for en/ms
+  buttons.forEach(function(btn){{
+    btn.addEventListener('click', function(){{
+      var lang = btn.getAttribute('data-lang-btn');
+      if(lang === 'zh') window.location.href = base + page;
+      else if(lang === 'en') window.location.href = base + 'en/' + page;
+      else if(lang === 'ms') window.location.href = base + 'ms/' + page;
+    }});
+  }});
+}})();
+</script>
+</body>
+</html>
